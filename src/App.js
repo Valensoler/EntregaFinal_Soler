@@ -12,7 +12,6 @@ const App = () => {
         <Routes>
           <Route path= '/' element = {<ItemListContainer greeting={"Listado de todos los productos"}/>}/>
           <Route path= '/category/:categoryId' element = {<ItemListContainer greeting={"Productos filtrados"}/>}/>
-          <Route path='/category/:categoryId' element={<ItemListContainer greeting={'Productos filtrados por categoria'} />} />
           <Route path= '/item/:itemId' element = {<ItemDetailContainer/>} />
         </Routes>
       </BrowserRouter>

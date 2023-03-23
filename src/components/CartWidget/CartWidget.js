@@ -1,4 +1,4 @@
-import '../CartWidget/CartWidget.css'
+import './CartWidget.css'
 import carrito from '../CartWidget/carrito.png'
 
 const CartWidget = () => {
@@ -11,3 +11,4 @@ const CartWidget = () => {
 }
 
 export default CartWidget
+
