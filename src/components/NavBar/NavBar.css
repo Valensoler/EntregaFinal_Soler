@@ -1,0 +1,33 @@
+nav{
+    background-color:rgba(250, 128, 114, 0.6);
+    display: flexbox;
+    justify-content: space-around;
+    align-items: center;
+    border: 5px solid #000;
+    text-align: center;
+}
+
+h1{
+    font-size: 40px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.ActiveLink {
+    background-color:#fff;
+    color: #000;
+    text-decoration: none;
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 5%;
+    border-radius: 5px;
+}
+
+.Link {
+    background-color: salmon;
+    color: #000;
+    text-decoration: none;
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 5%;
+    border-radius: 5px;
+}

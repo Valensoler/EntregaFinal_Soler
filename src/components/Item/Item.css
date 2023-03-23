@@ -1,0 +1,38 @@
+.Item{
+    background-color: rgba(250, 128, 114, 0.6);
+    border-color: black;
+    border-style: solid;
+    transition: .5s;
+    width: 35%;
+    margin-bottom: 1%;
+}
+
+.Item:hover{
+    background-color: rgba(250, 128, 114);
+    transition: .5s;
+}
+
+button{
+    background-color: rgba(250, 128, 114);
+    font-weight: bold;
+    transition: .5s;
+    margin-left: 35%;
+    font-size: 35px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+
+button:hover{
+    background-color: #fff;
+    transition: .5s;
+}
+
+h2, h3, h4{
+    text-align: center;
+    font-size: 35px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+img{
+    width: 150%;
+}

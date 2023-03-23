@@ -1,0 +1,13 @@
+.ItemList{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    flex-basis: 33.33%;
+}
+
+.ItemList img {
+    width: 60%;
+    height: 50%;
+    margin-left: 20%;
+}
