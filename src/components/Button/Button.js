@@ -1,4 +1,4 @@
-import "../Button/Button.css"
+import './Button.css'
 
 const Button = (props) => {
     return <button className="BtnItem" onClick={props.handleClick}> {props.label} </button>

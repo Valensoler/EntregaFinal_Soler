@@ -3,6 +3,7 @@ import { getProductById } from "../../asyncMock"
 import { useParams } from "react-router-dom"
 import ItemDetail from "../ItemDetail/ItemDetail"
 import "./ItemDetailContainer.css"
+import Counter from "../Counter/Counter"
 
 const ItemDetailContainer = () => {
     const [product, setProduct] = useState({})
@@ -32,6 +33,7 @@ const ItemDetailContainer = () => {
             <h1>Detalle del producto</h1>
             <div className="caract">
                 <ItemDetail {...product}/>
+                <Counter {...product}/>
             </div>
         </div>
     )

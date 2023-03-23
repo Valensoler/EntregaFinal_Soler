@@ -1,12 +1,12 @@
 .BtnItem{
-    color: white;
+    color: rgb(8, 8, 8);
     padding-left: 8%;
     padding-right: 8%;
     padding-top: 2%;
     padding-bottom: 2%;
     margin-right: 0.50%;
     margin-left: 0.50%;
-    background-color: #0083FF;
+    background-color: rgba(250, 128, 114, 0.6);
     font-weight: bold;
     transition: .5s;
     border-radius: 10px;
