@@ -1,13 +1,14 @@
+import "./ItemDetailContainer.css"
 import { useState, useEffect } from "react"
 import { getProductById } from "../../asyncMock"
 import { useParams } from "react-router-dom"
 import ItemDetail from "../ItemDetail/ItemDetail"
-import "./ItemDetailContainer.css"
-import Counter from "../Counter/Counter"
+
 
 const ItemDetailContainer = () => {
     const [product, setProduct] = useState({})
     const [loading, setLoading] = useState (true)
+    const [error, setError] = useState (false)
 
     const { itemId } = useParams ()
     useEffect(() => {
@@ -18,6 +19,7 @@ const ItemDetailContainer = () => {
             })
             .catch (error =>{
                 console.log (error)
+                setError (true)
             })
             .finally (() => {
                 setLoading (false)
@@ -28,12 +30,15 @@ const ItemDetailContainer = () => {
         return <h1>Cargando...</h1>
     }
 
+    if (error) {
+        return <h1> Vuelve a cargar la pagina </h1>
+    }
+
     return (
         <div className="producto">
             <h1>Detalle del producto</h1>
             <div className="caract">
                 <ItemDetail {...product}/>
-                <Counter {...product}/>
             </div>
         </div>
     )
