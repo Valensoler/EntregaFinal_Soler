@@ -1,7 +1,5 @@
-import './Button.css'
-
 const Button = (props) => {
-    return <button className="BtnItem" onClick={props.handleClick}> {props.label} </button>
+    return <button onClick={props.callback} style={{ backgroundColor: 'red', color: 'white'}}>{props.label}</button>
 }
 
 export default Button

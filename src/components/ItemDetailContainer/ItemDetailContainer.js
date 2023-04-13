@@ -1,46 +1,35 @@
-import "./ItemDetailContainer.css"
-import { useState, useEffect } from "react"
-import { getProductById } from "../../asyncMock"
-import { useParams } from "react-router-dom"
-import ItemDetail from "../ItemDetail/ItemDetail"
-
+import './ItemDetailContainer.css'
+import { useState, useEffect } from 'react'
+import ItemDetail from '../ItemDetail/ItemDetail'
+import { useParams } from 'react-router-dom'
+import { getDoc, doc } from 'firebase/firestore'
+import { db } from '../../service/firebase/firebaseConfig'
 
 const ItemDetailContainer = () => {
-    const [product, setProduct] = useState({})
-    const [loading, setLoading] = useState (true)
-    const [error, setError] = useState (false)
+    const [product, setProduct] = useState()
 
-    const { itemId } = useParams ()
+    const { itemId } = useParams()
+
+
     useEffect(() => {
-        setLoading (true)
-        getProductById (itemId)
-            .then (product => {
-                setProduct (product)
-            })
-            .catch (error =>{
-                console.log (error)
-                setError (true)
-            })
-            .finally (() => {
-                setLoading (false)
-            })
-    }, [itemId]) 
+        const productRef = doc(db, 'products', itemId)
 
-    if (loading) {
-        return <h1>Cargando...</h1>
-    }
-
-    if (error) {
-        return <h1> Vuelve a cargar la pagina </h1>
-    }
+        getDoc(productRef)
+            .then(snapshot => {
+                const data = snapshot.data()
+                const productAdapted = { id: snapshot.id, ...data}
+                setProduct(productAdapted)
+            }).catch(error => {
+                console.log(error)
+                //AGREGAR NOTIF DE ERROR
+            })
+    }, [itemId])
 
     return (
-        <div className="producto">
-            <h1>Detalle del producto</h1>
-            <div className="caract">
+            <div className="ItemDetailContainer">
                 <ItemDetail {...product}/>
             </div>
-        </div>
+
     )
 }
 
