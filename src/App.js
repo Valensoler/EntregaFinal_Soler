@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import { Notification, NotificationProvider } from './notification/NotificationService';
 import Cart from './components/Cart/Cart';
+import Checkout from './components/Checkout/Checkout';
+
 
 const App = () => {
   return (
@@ -19,8 +21,8 @@ const App = () => {
               <Route path= '/' element = {<ItemListContainer greeting={"Listado de todos los productos"}/>}/>
               <Route path= '/category/:categoryId' element = {<ItemListContainer greeting={"Productos filtrados"}/>}/>  
               <Route path= '/item/:itemId' element = {<ItemDetailContainer/>} />
-              <Route path= "./Cart" element = {<Cart/>}/>
-              <Route path= "./checkout" element = {<h1>Checkout</h1> } />
+              <Route path= "/cart" element = {<Cart/>}/>
+              <Route path= "/checkout" element = {<Checkout/> } />
             </Routes>
           </BrowserRouter>
         </CartProvider>

@@ -7,9 +7,7 @@ import { db } from '../../service/firebase/firebaseConfig'
 
 const ItemDetailContainer = () => {
     const [product, setProduct] = useState()
-
     const { itemId } = useParams()
-
 
     useEffect(() => {
         const productRef = doc(db, 'products', itemId)
