@@ -12,6 +12,7 @@ export const useAsync = (asyncFunction, dependencies = []) => {
     }
 
     useEffect(() => {
+        setLoading(true)
 
         asyncFunction ()
         .then(data => {
