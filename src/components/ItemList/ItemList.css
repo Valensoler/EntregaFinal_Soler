@@ -1,4 +1,4 @@
-.ItemList{
+.itemList{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -6,7 +6,7 @@
     flex-basis: 33.33%;
 }
 
-.ItemList img {
+.itemList img {
     width: 60%;
     height: 50%;
     margin-left: 20%;

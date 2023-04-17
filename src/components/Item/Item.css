@@ -1,4 +1,4 @@
-.Item{
+.Items{
     background-color: rgba(250, 128, 114, 0.6);
     border-color: black;
     border-style: solid;
@@ -7,7 +7,7 @@
     margin-bottom: 1%;
 }
 
-.Item:hover{
+.Items:hover{
     background-color: rgba(250, 128, 114);
     transition: .5s;
 }

@@ -20,19 +20,19 @@ export const getProducts = (categoryId) => {
         })
 }
 
-// export const getProductsById = (itemId) => {
-//     const idRef = itemId
-//     ? query (collection (db, 'products'), where ('id', '==', itemId))
-//     : collection (db,'products')
+export const getProductsById = (itemId) => {
+    const productRef = itemId
+    ? query (collection (db, 'products'), where ('id', '==', itemId))
+    : collection (db,'products')
 
-//     return getDoc(idRef)
-//         .then(snapshot => {
-//             const productAdapted = { id: snapshot.id, ...data}
-//             const data = snapshot.data()
-
-//             return productAdapted
-//         })
-//         .catch(error => {
-//             return error
-//         })
-// }
+    return getDoc(productRef)
+    .then(snapshot => {
+            const productAdapted = { id: snapshot.id, ...data}
+            const data = snapshot.data()
+        
+            return productAdapted
+        })
+        .catch(error => {
+            return error
+        })
+}
