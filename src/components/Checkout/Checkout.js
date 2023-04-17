@@ -5,6 +5,7 @@ import { collection, documentId, query, getDocs, where, writeBatch, addDoc } fro
 import { useNotification } from "../../notification/NotificationService"
 import { useNavigate } from "react-router-dom"
 
+
 const Checkout = () => {
     const [orderId, setOrderId] = useState ("")
     const [loading, setLoading] = useState (false)
@@ -18,13 +19,7 @@ const Checkout = () => {
         try {
             setLoading (true)
             const objOrder = {
-                buyer: {
-                    name: 'Sebastian Zuviria',
-                    phone: '123456789',
-                    address: 'mi direaccion 123'
-
-                    //BORRAR ESTO Y HACER LOS DATOS DESDE EL FORMULARIO 
-                },
+                buyer: {},
                 items: cart,
                 total: total,
             }

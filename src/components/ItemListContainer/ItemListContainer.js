@@ -1,20 +1,21 @@
 import { useEffect, useState, memo } from 'react'
 import { useParams } from 'react-router-dom'
-// import { getProducts, getProductsByCategory } from "../../asyncMock"
+//import { getProducts, getProductsByCategory } from "../../asyncMock"
 import ItemList from '../ItemList/ItemList'
-// import { getDocs, collection, query, where } from 'firebase/firestore'
-// import { db } from '../../services/firebase/firebaseConfig'
-import { getProducts } from '../../service/firebase/firestore/products'
-import { useAsync } from "../../hooks/useAsync"
+//import { getDocs, collection, query, where } from 'firebase/firestore'
+//import { db } from '../../service/firebase/firebaseConfig'
+ import { getProducts } from '../../service/firebase/firestore/products'
+ import { useAsync } from "../../hooks/useAsync"
  
 const ItemListMemo = memo(ItemList)
 
 const ItemListContainer = ({ greeting }) => {
     const { categoryId } = useParams()
-    
+
     const getProductsWithCategory = () => getProducts(categoryId)
 
     const { data: products, error, loading } = useAsync(getProductsWithCategory, [categoryId])
+
 
     // const [products, setProducts] = useState([])
     // const [loading, setLoading] = useState(true)
@@ -22,52 +23,26 @@ const ItemListContainer = ({ greeting }) => {
 
 
     // useEffect(() => {
-    //     setLoading(true)
+    //     const productsRef = categoryId 
+    //     ? query(collection(db, 'products'), where('category', '==', categoryId))
+    //     : collection(db, 'products')
 
-    //     getProducts(categoryId)
-    //         .then(products => {
-    //             setProducts(products)
-    //         })
-    //         .catch(error => {
-    //             setError(error)
-    //         })
-    //         .finally(() => {
-    //             setLoading(false)
+    // getDocs(productsRef)
+    //     .then(snapshot => {
+    //         const productsAdapted = snapshot.docs.map(doc => {
+    //             const data = doc.data()
+    //             return { id: doc.id, ...data }
     //         })
 
-        // const productsRef = categoryId 
-        //     ? query(collection(db, 'products'), where('category', '==', categoryId))
-        //     : collection(db, 'products')
+    //         setProducts(productsAdapted)
+    //     })
+    //     .catch(error => {
+    //         console.log(error)
+    //     })
+    //     .finally(() => {
+    //         setLoading(false)
+    //     })
 
-        // getDocs(productsRef)
-        //     .then(snapshot => {
-        //         const productsAdapted = snapshot.docs.map(doc => {
-        //             const data = doc.data()
-        //             return { id: doc.id, ...data }
-        //         })
-
-        //         setProducts(productsAdapted)
-        //     })
-        //     .catch(error => {
-        //         console.log(error)
-        //     })
-        //     .finally(() => {
-        //         setLoading(false)
-        //     })
-
-        // const asyncFunction = categoryId ? getProductsByCategory : getProducts
-
-        // asyncFunction(categoryId)
-        //     .then(products => {
-        //         setProducts(products)
-        //     })
-        //     .catch(error => {
-        //         console.log(error)
-        //         setError(true)
-        //     })
-        //     .finally(() => {
-        //         setLoading(false)
-        //     })
     // }, [categoryId])
 
     if(loading) {

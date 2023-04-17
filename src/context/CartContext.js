@@ -11,7 +11,7 @@ export const CartProvider  = ({children}) => {
       if(!isInCart(productToAdd.id)) {
       setCart(prev => [...prev, productToAdd])
       } else {
-      console.log('El producto ya esta agregado')
+      console.log ('El producto ya esta agregado')
       }
   }
 
