@@ -15,8 +15,6 @@ const ItemListContainer = ({ greeting }) => {
     const getProductsWithCategory = () => getProducts(categoryId)
 
     const { data: products, error, loading } = useAsync(getProductsWithCategory, [categoryId])
-
-    console.log (products)
     
     // const [products, setProducts] = useState([])
     // const [loading, setLoading] = useState(true)

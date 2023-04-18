@@ -46,16 +46,6 @@ const ItemDetailContainer = () => {
         // })
         // const productRef = doc(db, 'products', itemId)
 
-
-        if(loading) {
-            return <h1>Cargando...</h1>
-        }
-    
-        if(error) {
-            return <h1>Vuelva a cargar la pagina</h1>
-        }
-    
-
     return (
             <div className= "ItemDetailContainer">
                 <ItemDetail {...product}/>
