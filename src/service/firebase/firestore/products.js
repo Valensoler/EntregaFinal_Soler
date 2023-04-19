@@ -21,7 +21,7 @@ export const getProducts = (categoryId) => {
 }
 
 export const getProductsById = (itemId) => {
-   
+
     const collectionProd = collection(db,"products")
 
     const productRef = doc(collectionProd,itemId)
@@ -31,7 +31,7 @@ export const getProductsById = (itemId) => {
             const productAdapted = {
                 id:result.id,
                 ...result.data()
-              }
+            }
         
             return productAdapted
         })
