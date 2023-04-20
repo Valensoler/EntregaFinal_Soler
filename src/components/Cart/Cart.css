@@ -1,37 +1,7 @@
-.carritoCliente {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 40px;
-    text-align: center;
-    background-color:rgba(250, 128, 114, 0.6);
-    border: 3px solid #000;
-    border-radius: 20px;
-}
-
-form {
-    background-color: rgba(250, 128, 114, 0.6);
-    border: 3px solid #000;
-    border-radius: 20px;
-}
-
-label {
-    font-size: 25px;
-    font-family: 'Times New Roman', Times, serif;
-    text-align: center;
-    display: block;
-    margin-top: 20px;
-}
-
-input {
-    font-size: 20px;
-}
-
-.botonCompra {
-    background-color: salmon;
-    color: #000;
-    text-decoration: none;
-    font-size: 30px;
-    font-family: 'Times New Roman', Times, serif;
-    margin-top: 200px;
-    margin-left: 40%;
-    border-radius: 5px;
+.prod.img {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    object-position: center;
+    margin-left: 33%;
 }

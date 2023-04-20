@@ -1,25 +1,70 @@
 import { db } from "../firebaseConfig"
-import { getDocs, collection, query, where } from "firebase/firestore"
-import { createAdaptedOrderFromFirestore } from "../../../adapters/createAdaptedOrderFromFirestore"
+import { collection, getDocs, where, query, Timestamp, addDoc, documentId, writeBatch} from "firebase/firestore"
 
-export const createOrder = (orderId) => {
-    
-    const orderRef = orderId
-    ? query (collection(db, 'orders'), where ('orders', '==', orderId))
-    : collection (db, 'orders')
+export const addOrder = async ( values, cart, total, setOrderId, ref, clearCart) => {
+    const order = {
+        Comprador: values,
+        Items: cart,
+        Total: total (),
+        Fyh: Timestamp.fromDate (new Date ())
+    }
 
+    const batch = writeBatch (db)
+    const ordersRef = collection (db, "orders")
+    const productsRef = collection (db, "products")
 
-    return getDocs (orderRef)
-    .then (snapshot => {
-        const ordersAdapted = snapshot.docs.map(doc => {
-            return createAdaptedOrderFromFirestore (doc)
-        })
+    const question = query(productsRef, where (documentId(), "in", cart.map((el) => el.id)))
+    const products = await getDocs (question)
+    const outOfStock = []
 
-        return ordersAdapted 
-    }).catch (error =>{
-        return error
+    products.docs.forEach ((doc) => {
+        const item = cart.find ((el) => el.id === doc.id)
+
+        if (doc.data().stock >= item.quantity) {
+            batch.update(doc, ref, {
+                stock: doc.data ().stock - item.quantity
+            })
+        } else{
+            outOfStock.push (item)
+        }
     })
+
+    if (outOfStock.length === 0) {
+        addDoc(ordersRef, order)
+        .then ((doc) => {
+            batch.commit ()
+            setOrderId(doc.id)
+            clearCart ()
+        })
+    } else {
+        alert ("Hay productos sin stock")
+        // AGREGAR NOTIFICACION
+    }
 }
+
+
+// import { db } from "../firebaseConfig"
+// import { getDocs, collection, query, where } from "firebase/firestore"
+// import { createAdaptedOrderFromFirestore } from "../../../adapters/createAdaptedOrderFromFirestore"
+
+// export const createOrder = (orderId) => {
+    
+//     const orderRef = orderId
+//     ? query (collection(db, 'orders'), where ('orders', '==', orderId))
+//     : collection (db, 'orders')
+
+
+//     return getDocs (orderRef)
+//     .then (snapshot => {
+//         const ordersAdapted = snapshot.docs.map(doc => {
+//             return createAdaptedOrderFromFirestore (doc)
+//         })
+
+//         return ordersAdapted 
+//     }).catch (error =>{
+//         return error
+//     })
+// }
 
     // cart.map (prod => prod.id) 
 

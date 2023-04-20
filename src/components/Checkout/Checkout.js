@@ -1,104 +1,318 @@
-import { useContext, useState } from "react"
-import { CartContext } from "../../context/CartContext"
-// import { db } from "../../service/firebase/firebaseConfig"
-// import { collection, documentId, query, getDocs, where, writeBatch, addDoc } from "firebase/firestore"
-// import { useNotification } from "../../notification/NotificationService"
-import { useNavigate, useParams } from "react-router-dom"
-import { useAsync } from "../../hooks/useAsync"
-import { createOrder } from "../../service/firebase/firestore/orders"
+import { useContext, useState } from 'react'
+import { CartContext } from '../../context/CartContext'
+// import { db } from '../../service/firebase/firebaseConfig'
+// import { documentId, getDocs, query, collection, where, writeBatch, addDoc } from 'firebase/firestore'
+import { useNotification } from '../../notification/NotificationService'
+import { useNavigate } from 'react-router-dom'
+import { addOrder } from '../../service/firebase/firestore/orders'
+import { useAsync } from '../../hooks/useAsync'
+
+function Form() {
+    const [user, setUser] = useState({
+        nombre: '',
+        apellido: '',
+        codigoPostal: '',
+        telefono: '',
+        correoElectronico: '',
+        direccion: ''
+    });
+
+    const handleChange = (event) => {
+        setUser({
+        ...user,
+        [event.target.name]: event.target.value
+        });
+    };
+
+    const CampoDeFormulario = ({ label, name }) => {
+        return (
+        <div>
+            <label htmlFor={name}>{label}</label>
+            <input type="text" id={name} name={name} value={user[name]} onChange={handleChange} />
+        </div>
+        );
+    };
+
+    return (
+        <form>
+        <CampoDeFormulario label="Nombre:" name="nombre" />
+        <CampoDeFormulario label="Apellido:" name="apellido" />
+        <CampoDeFormulario label="Código Postal:" name="codigoPostal" />
+        <CampoDeFormulario label="Teléfono:" name="telefono" />
+        <CampoDeFormulario label="Correo Electrónico:" name="correoElectronico" />
+        <CampoDeFormulario label="Dirección:" name="direccion" />
+        <button> terminar compra </button>
+        </form>
+    );
+}
+
+export default Form;
+
+// const Checkout = () => {
+//         const [orderId, setOrderId] = useState('') 
+//         const [loading, setLoading] = useState(false)
+//         const [user, setUser] = useState ({})
+
+//         const { cart, total, clearCart } = useContext(CartContext)
+//         const { setNotification } = useNotification()
+        
+//         const navigate = useNavigate()
 
 
-const Checkout = () => {
-    // const [orderId, setOrderId] = useState ("")
-    // const [loading, setLoading] = useState (false)
-    const {cart, total} = useContext (CartContext)
-    const { orderId } = useParams ()
 
-    const createOrderWithId = () => createOrder (orderId)
+//         const updateUser = (event) => {
+//             setUser( user => ({...user, [event.target.name]: event.target.value }))
+//         }
 
-    const { data: orders, loading, error } = useAsync(createOrderWithId, [orderId])
+//             <form>
+//                 <label>
+//                     Nombre:
+//                     <input
+//                     type="text"
+//                     name="nombre"
+//                     value={user.nombre}
+//                     onChange={updateUser}
+//                 />
+//                 </label>
+//                 <label>
+//                     Apellido:
+//                     <input
+//                     type="text"
+//                     name="apellido"
+//                     value={user.apellido}
+//                     onChange={updateUser}
+//                 />
+//                 </label>
+//                 <label>
+//                     Código postal:
+//                     <input
+//                     type="text"
+//                     name="codigoPostal"
+//                     value={user.codigoPostal}
+//                     onChange={updateUser}
+//                 />
+//                 </label>
+//                 <label>
+//                 Teléfono:
+//                 <input
+//                     type="text"
+//                     name="telefono"
+//                     value={user.telefono}
+//                     onChange={updateUser}
+//                 />
+//                 </label>
+//                 <label>
+//                 Correo electrónico:
+//                 <input
+//                     type="email"
+//                     name="correoElectronico"
+//                     value={user.correoElectronico}
+//                     onChange={updateUser}
+//                 />
+//                 </label>
+//                 <label>
+//                 Dirección:
+//                 <input
+//                     type="text"
+//                     name="direccion"
+//                     value={user.direccion}
+//                     onChange={updateUser}
+//                 />
+//                 </label>
+//                 </form>
+//         // if(loading) {
+//         //     return <h1>Cargando...</h1>
+//         // }
+    
+//         // if(error) {
+//         //     return <h1>Vuelva a cargar la pagina</h1>
+//         // }
+    
 
-    const handleConfirm = async (userData) => {
-            const objOrder = {
-                buyer: {
-                    Name: "",
-                    Phone: "",
-                    Adress: ""
-                }, 
-                items: cart,
-                total: total,
-            }
-            console.log (handleConfirm)
-        }
+//         return <form setUser = {orders}/>
+// }
+// export default Checkout        
 
-    //         const ids = cart.map (prod => prod.id) 
+    // const handleConfirm = async (userData) => {
+    //     try{ 
+    //         setLoading(true)
+    //         const objOrder = {
+    //             buyer: {
+    //                 name: '',
+    //                 phone: '',
+    //                 address: ''
+    //             },
+    //             items: cart,
+    //             total: total
+    //         }
 
-    //         const productRef = query (collection (db, "products"), where (documentId(), 'in', ids))
+    //         const ids = cart.map(prod => prod.id)
 
-    //         const productAddedFromFirestore = await getDocs(productRef)
+    //         const productRef = query(collection(db, 'products'), where(documentId(), 'in', ids))
 
-    //         const { docs } = productAddedFromFirestore
+    //         const productsAddedFromFirestore = await getDocs(productRef)
 
-    //         const batch = writeBatch (db)
+    //         const { docs } = productsAddedFromFirestore
+
+    //         const batch = writeBatch(db)
     //         const outOfStock = []
 
-    //         docs.forEach (doc =>{
-    //             const dataDoc = doc.data ()
+    //         docs.forEach(doc => {
+    //             const dataDoc = doc.data()
     //             const stockDb = dataDoc.stock
 
-    //             const productAddedToCart = cart.find (prod => prod.id === doc.id)
+    //             const productAddedToCart = cart.find(prod => prod.id === doc.id)
     //             const prodQuantity = productAddedToCart?.quantity
 
-    //             if (stockDb >= prodQuantity) {
-    //                 batch.update (doc.ref, { stock: stockDb - prodQuantity})
+    //             if(stockDb >= prodQuantity) {
+    //                 batch.update(doc.ref, { stock: stockDb - prodQuantity})
     //             } else {
-    //                 outOfStock.push ({ id: doc, ...dataDoc })
+    //                 outOfStock.push({ id: doc, ...dataDoc})
     //             }
     //         })
 
-    //         if (outOfStock.length === 0) {
-    //             batch.commit ()
+    //         if(outOfStock.length === 0) {
+    //             batch.commit()
 
-    //             const orderRef = collection (db, "orders")
+    //             const orderRef = collection(db, 'orders')
 
-    //             const orderAdded = await addDoc (orderRef, objOrder)
-    //             clearCart ()
-    //             setOrderId (orderAdded.id)
+    //             const orderAdded = await addDoc(orderRef, objOrder)
+    //             clearCart()
+    //             setOrderId(orderAdded.id)
 
-    //             setTimeout (() => {
-    //                 navigate ('/')
+    //             setTimeout(() => {
+    //                 navigate('/')
     //             }, 5000)
 
     //         } else {
-    //             setNotification ("error", "Hay productos que no tienen stock disponible")
-    //         }
+    //             setNotification('error', 'Hay productos que no tienen stock disponible')
+    //         } 
     //     } catch (error) {
-    //         setNotification ("error", "Hubo un error generando la orden")
+    //         setNotification('error', 'Hubo un error generando la orden')
     //     } finally {
-    //         setLoading (false)
+    //         setLoading(false)
     //     }
+    // }
+    
+    // if(loading) {
+    //     return <h1>SE esta generando su orden...</h1>
+    // }
 
     // return (
-    //     // <div>
-    //     //     <h1> Checkout </h1>
-    // </div>
+    //     <div>
+    //         <h1>Checkout</h1>
+    //         { orderId ? <h2>El id de su orden es: {orderId}</h2> : <button onClick={handleConfirm}>Generar orden</button> }
+    //     </div>
     // )
 
-    if(loading) {
-        return <h1>Cargando...</h1>
-    }
+    // // const [orderId, setOrderId] = useState ("")
+    // // const [loading, setLoading] = useState (false)
+    // // const {cart, total} = useContext (CartContext)
+    // const { orderId } = useParams ()
 
-    if(error) {
-        return <h1>Vuelva a cargar la pagina</h1>
-    }
+    // const [user, setUser] = useState ({})
+
+    // const updateUser = (event) => {
+    //     setUser( user => ({...user, [event.target.name]: event.target.value }))
+    // }
+
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     setUser('');
+    //     setUser('');
+    //     setUser('');
+    //     setUser ('');
+    //     setUser('');
+    //     setUser('');
+    //     setUser('');
+    //     setUser('');
+    // }
 
 
-    return (
-        <div>
-            <h2>El id de su orden es: {orderId}</h2> : <button onClick={handleConfirm}>Generar orden</button>
-        </div>
-    )
-}
+
+    // const createOrderWithId = () => createOrder (orderId)
+
+    // const { data: orders, loading, error } = useAsync(createOrderWithId, [orderId])
+
+    // // const handleConfirm = async (userData) => {
+    // //         const objOrder = {
+    // //             buyer: {
+    // //                 Name: "",
+    // //                 Phone: "",
+    // //                 Adress: ""
+    // //             }, 
+    // //             items: cart,
+    // //             total: total,
+    // //         }
+    // //         console.log (handleConfirm)
+    // //     }
+
+    // //         const ids = cart.map (prod => prod.id) 
+
+    // //         const productRef = query (collection (db, "products"), where (documentId(), 'in', ids))
+
+    // //         const productAddedFromFirestore = await getDocs(productRef)
+
+    // //         const { docs } = productAddedFromFirestore
+
+    // //         const batch = writeBatch (db)
+    // //         const outOfStock = []
+
+    // //         docs.forEach (doc =>{
+    // //             const dataDoc = doc.data ()
+    // //             const stockDb = dataDoc.stock
+
+    // //             const productAddedToCart = cart.find (prod => prod.id === doc.id)
+    // //             const prodQuantity = productAddedToCart?.quantity
+
+    // //             if (stockDb >= prodQuantity) {
+    // //                 batch.update (doc.ref, { stock: stockDb - prodQuantity})
+    // //             } else {
+    // //                 outOfStock.push ({ id: doc, ...dataDoc })
+    // //             }
+    // //         })
+
+    // //         if (outOfStock.length === 0) {
+    // //             batch.commit ()
+
+    // //             const orderRef = collection (db, "orders")
+
+    // //             const orderAdded = await addDoc (orderRef, objOrder)
+    // //             clearCart ()
+    // //             setOrderId (orderAdded.id)
+
+    // //             setTimeout (() => {
+    // //                 navigate ('/')
+    // //             }, 5000)
+
+    // //         } else {
+    // //             setNotification ("error", "Hay productos que no tienen stock disponible")
+    // //         }
+    // //     } catch (error) {
+    // //         setNotification ("error", "Hubo un error generando la orden")
+    // //     } finally {
+    // //         setLoading (false)
+    // //     }
+    // // return (
+    // //     // <div>
+    // //     //     <h1> Checkout </h1>
+    // // </div>
+    // // )
+
+    // if(loading) {
+    //     return <h1>Cargando...</h1>
+    // }
+
+    // if(error) {
+    //     return <h1>Vuelva a cargar la pagina</h1>
+    // }
 
 
-export default Checkout
+    // return (
+    //     <div>
+    //         {/* <h2>El id de su orden es: {orderId}</h2> : <button onClick={handleConfirm}>Generar orden</button> */}
+    //     </div>
+    // )
+
+
+
