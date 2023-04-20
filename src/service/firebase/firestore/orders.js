@@ -1,46 +1,76 @@
 import { db } from "../firebaseConfig"
-import { collection, getDocs, where, query, Timestamp, addDoc, documentId, writeBatch} from "firebase/firestore"
+import { collection, getDocs, where, query, Timestamp} from "firebase/firestore"
 
-export const addOrder = async ( values, cart, total, setOrderId, ref, clearCart) => {
+
+export const addOrder = async ( objOrder, cart, total, setOrderId) => {
     const order = {
-        Comprador: values,
+        Comprador: objOrder,
         Items: cart,
         Total: total (),
-        Fyh: Timestamp.fromDate (new Date ())
+        Fyh: Timestamp.fromDate (new Date (setOrderId))
     }
 
-    const batch = writeBatch (db)
-    const ordersRef = collection (db, "orders")
-    const productsRef = collection (db, "products")
+    const orderRef = objOrder
+    ? query(collection (db, "orders"), where ("order", "==", order))
+    : collection(db, "orders")
 
-    const question = query(productsRef, where (documentId(), "in", cart.map((el) => el.id)))
-    const products = await getDocs (question)
-    const outOfStock = []
+    const orderAdded = await addOrder (orderRef, objOrder)
+        setOrderId (orderAdded.id)
 
-    products.docs.forEach ((doc) => {
-        const item = cart.find ((el) => el.id === doc.id)
 
-        if (doc.data().stock >= item.quantity) {
-            batch.update(doc, ref, {
-                stock: doc.data ().stock - item.quantity
-            })
-        } else{
-            outOfStock.push (item)
+    return getDocs (orderRef)
+    .then (result => {
+        const ordersAdapted = {
+            id:result.id,
+            ...result.data ()
         }
-    })
-
-    if (outOfStock.length === 0) {
-        addDoc(ordersRef, order)
-        .then ((doc) => {
-            batch.commit ()
-            setOrderId(doc.id)
-            clearCart ()
+        return ordersAdapted
         })
-    } else {
-        alert ("Hay productos sin stock")
-        // AGREGAR NOTIFICACION
+        .catch (error =>{
+            return error
+        })
     }
-}
+
+// export const addOrder = async ( htmlFor, cart, total, setOrderId, ref, clearCart) => {
+//     const order = {
+//         Comprador: htmlFor,
+//         Items: cart,
+//         Total: total (),
+//         Fyh: Timestamp.fromDate (new Date (setOrderId))
+//     }
+
+//     const batch = writeBatch (db)
+//     const ordersRef = collection (db, "orders")
+//     const productsRef = collection (db, "products")
+
+//     const question = query(productsRef, where (documentId(), "in", cart.map((el) => el.id)))
+//     const products = await getDocs (question)
+//     const outOfStock = []
+
+//     products.docs.forEach ((doc) => {
+//         const item = cart.find ((el) => el.id === doc.id)
+
+//         if (doc.data().stock >= item.quantity) {
+//             batch.update(doc, ref, {
+//                 stock: doc.data ().stock - item.quantity
+//             })
+//         } else{
+//             outOfStock.push (item)
+//         }
+//     })
+
+    // if (outOfStock.length === 0) {
+    //     addDoc(ordersRef, order)
+    //     .then ((doc) => {
+    //         batch.commit ()
+    //         setOrderId(doc.id)
+    //         clearCart ()
+    //     })
+    // } else {
+    //     alert ("Hay productos sin stock")
+    //     // AGREGAR NOTIFICACION
+    // }
+
 
 
 // import { db } from "../firebaseConfig"

@@ -6,7 +6,6 @@ export const getCategories = (categoriesId) => {
     const categoriesRef = categoriesId 
     ? query(collection(db, 'categories'), where('categories', '==', categoriesId))
     : collection(db, 'categories')
-    console.log (categoriesId)
 
     return getDocs(categoriesRef)
         .then(snapshot => {
