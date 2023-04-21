@@ -6,7 +6,7 @@ const ItemList = ({products}) => {
         <div className= "itemList">
             {products.map(prod => <Item key={prod.id} {...prod}/>)}
         </div>
-    )
+    ) 
 }
 
-export default ItemList
+export default ItemList   

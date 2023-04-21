@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { CartContext } from '../../context/CartContext'
 import { Link } from 'react-router-dom'
+import Item from '../Item/Item'
 import "./Cart.css"
 
 const Cart = () => {
@@ -10,25 +11,25 @@ const Cart = () => {
         return ('No hay productos')
     }else {
         return (
-        <div>
-            <h1>Cart</h1>
-            <div>
+        <div className='cartCount'>
+            <h1>Mi carrito</h1>
+            <div className='cart'>
             {
-                cart.map(prod => {
+                cart.map(product => {
                     return (
-                        <div key={prod.id}>
-                            {prod.name}
-                            {prod.img}
-                            {prod.description}
+                        <div className='cartDetail' key={product.id}>
+                        {product.name}
+                        {product.img}
+                        {product.description} 
                         </div>
-                    
                     )
                 })
             }
             </div>
-            <Link to='/checkout'>Finalizar compra</Link>
+            <Link className='button' to='/checkout'>Finalizar compra</Link>
         </div>
     )
     }
 }
+
 export default Cart
